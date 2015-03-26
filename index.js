@@ -3,7 +3,13 @@
 
 module.exports = {
   name: 'ember-cli-airbrake',
+  isEnabled: function () {
+    var options = this.app.options.airbrake;
+    return typeof options !== 'undefined' || !!options;
+  },
   included: function(app) {
-    app.import("vendor/airbrake-shim.js");
+    if (this.isEnabled()) {
+      app.import("vendor/airbrake-shim.js");
+    }
   }
 };
